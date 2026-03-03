@@ -15,9 +15,14 @@ const CreatePost = () => {
         const postTitle = postTitleElement.current.value;
         const postBody = postBodyElement.current.value;
         const reactions = reactionsElement.current.value;
-        const tags = tagsElement.current.value.split(/(\s+)/)
+        const tags = tagsElement.current.value.split('');
+        userIdElement.current.value = '';
+        postTitleElement.current.value = '';
+        postBodyElement.current.value = '';
+        reactionsElement.current.value = '';
+        tagsElement.current.value = ''
 
-        addPost(userId,postTitle,postBody,reactions,tags);
+        addPost(userId, postTitle, postBody, reactions, tags);
     }
     return (
         <form className='create-post' onSubmit={handleSubmit}>
@@ -65,7 +70,7 @@ const CreatePost = () => {
             {/* Post Tags */}
             <div className="mb-3">
                 <label htmlFor="tags"
-                    className="form-label">No of reactions</label>
+                    className="form-label">Tag</label>
                 <input type="text"
                     ref={tagsElement}
                     className="form-control"
