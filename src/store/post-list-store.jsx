@@ -4,12 +4,15 @@ import { SiPayloadcms } from "react-icons/si";
 export const PostList = createContext({
     postList: [],
     addPost: () => { },
+    addAllPosts: () => { },
     deletePost: () => { },
 });
 const postListReducer = (currentPostList, action) => {
     let newPostList = currentPostList;
     if (action.type === 'DELETE_POST') {
         newPostList = currentPostList.filter((post) => post.id !== action.payload.postId)
+    } else if (action.type === 'ADD_ALL_POST') {
+        newPostList = action.payload.posts;
     } else if (action.type === 'ADD_POST') {
         newPostList = [action.payload, ...currentPostList]
     }
@@ -33,6 +36,14 @@ const PostListProvider = ({ children }) => {
             }
         })
     };
+    const addAllPosts = (posts) => {
+        dispatchPostList({
+            type: 'ADD_ALL_POST',
+            payload: {
+                posts
+            }
+        })
+    };
     const deletePost = (postId) => {
         dispatchPostList({
             type: 'DELETE_POST',
@@ -46,6 +57,7 @@ const PostListProvider = ({ children }) => {
             value={{
                 postList: postList,
                 addPost: addPost,
+                addAllPosts: addAllPosts,
                 deletePost: deletePost,
             }}
         >
