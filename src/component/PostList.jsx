@@ -10,12 +10,17 @@ const PostList = () => {
 
     useEffect(() => {
         setLoading(true);
-        fetch('https://dummyjson.com/posts')
+        const controller = new AbortController();
+        const signal = controller.signal;
+        fetch('https://dummyjson.com/posts', { signal })
             .then(res => res.json())
             .then(data => {
                 addAllPosts(data.posts)
                 setLoading(false);
             });
+        return () => {
+            controller.abort();
+        }
     }, [])
 
 
